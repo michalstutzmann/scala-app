@@ -1,1 +1,1 @@
-# App
+# Scala App
