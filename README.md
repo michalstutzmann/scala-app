@@ -1,1 +1,1 @@
-# scala-app
+# App
