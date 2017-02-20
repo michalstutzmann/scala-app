@@ -34,7 +34,7 @@ lazy val root = (project in file(".")).
     publishArtifact in Test := false,
     pomIncludeRepository := { _ => false },
     pomExtra := (
-      <url>http://github.com/mwegrz/app</url>
+      <url>http://github.com/mwegrz/scala-app</url>
         <licenses>
           <license>
             <name>Apache License 2.0</name>
