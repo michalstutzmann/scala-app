@@ -4,7 +4,7 @@ import scalariform.formatter.preferences.{DoubleIndentClassDeclaration, PlaceSca
 val ScalaVersion = "2.12.1"
 val CrossScalaVersions = Seq("2.11.8", ScalaVersion)
 val ConfigVersion = "1.3.1"
-val ScalaStructLogVersion = "0.1.0-SNAPSHOT"
+val ScalaStructLogVersion = "0.1.1-SNAPSHOT"
 val JlineVersion = "2.12"
 
 lazy val root = (project in file(".")).

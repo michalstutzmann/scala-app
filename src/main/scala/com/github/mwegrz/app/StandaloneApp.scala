@@ -19,17 +19,17 @@ abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit
 
   final def main(args: Array[String]): Unit = {
     assert(shutdownable == null)
-    log.info("Initializing")
+    log.debug("Initializing")
     val initialization: Future[Try[Shutdownable]] = Future(Try(init(args)))
     shutdownable = Try(Await.result(initialization, initTimeout)).flatten
     shutdownable match {
       case Success(r) =>
-        log.info("Initialized")
+        log.debug("Initialized")
         addShutdownHook()
         Future(afterMain())
-        log.info("Running")
+        log.debug("Running")
         r.run()
-        log.info("Finished")
+        log.debug("Finished")
       case Failure(t: TimeoutException) =>
         log.error(s"Timed out while waiting for the initialization to complete. Terminating the JVM", t)
         System.exit(1)
@@ -41,7 +41,7 @@ abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit
 
   final def shutdown(): Unit = {
     assert(shutdownable != null)
-    log.info("Shutting down")
+    log.debug("Shutting down")
     shutdownable foreach { s =>
       val shutdown = s.shutdown()
       Try(Await.result(shutdown, initTimeout)) match {
