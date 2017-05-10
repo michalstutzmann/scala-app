@@ -43,7 +43,7 @@ abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit
     assert(shutdownable != null)
     log.debug("Shutting down")
     shutdownable foreach { s =>
-      val shutdown = s.shutdown()
+      val shutdown = Future(s.shutdown())
       Try(Await.result(shutdown, initTimeout)) match {
         case Success(e) => log.info("Shut down")
         case Failure(t: TimeoutException) =>
