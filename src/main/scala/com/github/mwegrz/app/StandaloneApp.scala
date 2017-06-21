@@ -8,10 +8,13 @@ import scala.sys.ShutdownHookThread
 import scala.util.{ Failure, Success, Try }
 import com.github.mwegrz.scalastructlog.Logging
 
-abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit ec: ExecutionContext) extends Logging {
-  private val initTimeout: Duration = FiniteDuration(config.getDuration("standalone-app.init-timeout", TimeUnit.MILLISECONDS), MILLISECONDS)
+abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit ec: ExecutionContext)
+    extends Logging {
+  private val initTimeout: Duration =
+    FiniteDuration(config.getDuration("standalone-app.init-timeout", TimeUnit.MILLISECONDS), MILLISECONDS)
 
-  private val shutdownTimeout: Duration = FiniteDuration(config.getDuration("standalone-app.shutdown-timeout", TimeUnit.MILLISECONDS), MILLISECONDS)
+  private val shutdownTimeout: Duration =
+    FiniteDuration(config.getDuration("standalone-app.shutdown-timeout", TimeUnit.MILLISECONDS), MILLISECONDS)
 
   private var shutdownable: Try[Shutdownable] = _
 
@@ -29,7 +32,7 @@ abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit
         Future(afterMain())
         log.debug("Running")
         r.run()
-        log.debug("Finished")
+        log.debug("Running successful")
       case Failure(t: TimeoutException) =>
         log.error(s"Timed out while waiting for the initialization to complete. Terminating the JVM", t)
         System.exit(1)
