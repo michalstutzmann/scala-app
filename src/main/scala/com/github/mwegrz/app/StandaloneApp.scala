@@ -32,7 +32,7 @@ abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit
         Future(afterMain())
         log.debug("Running")
         r.run()
-        log.debug("Running successful")
+        log.debug("Run")
       case Failure(t: TimeoutException) =>
         log.error(s"Timed out while waiting for the initialization to complete. Terminating the JVM", t)
         System.exit(1)
