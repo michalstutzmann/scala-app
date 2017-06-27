@@ -8,7 +8,7 @@ import scala.sys.ShutdownHookThread
 import scala.util.{ Failure, Success, Try }
 import com.github.mwegrz.scalastructlog.Logging
 
-abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit ec: ExecutionContext)
+abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit executionContext: ExecutionContext)
     extends Logging {
   private val initTimeout: Duration =
     FiniteDuration(config.getDuration("standalone-app.init-timeout", TimeUnit.MILLISECONDS), MILLISECONDS)
@@ -29,7 +29,7 @@ abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit
       case Success(r) =>
         log.debug("Initialized")
         addShutdownHook()
-        Future(afterMain())
+        Future(postMain())
         log.debug("Running")
         r.run()
         log.debug("Run")
@@ -46,7 +46,10 @@ abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit
     assert(shutdownable != null)
     log.debug("Shutting down")
     shutdownable foreach { s =>
-      val shutdown = Future(s.shutdown())
+      val shutdown = for {
+        _ <- Future(s.shutdown())
+        _ <- Future(postShutdown())
+      } yield ()
       Try(Await.result(shutdown, initTimeout)) match {
         case Success(e) => log.info("Shut down")
         case Failure(t: TimeoutException) =>
@@ -61,7 +64,9 @@ abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit
 
   def init(args: Array[String]): Shutdownable
 
-  private[app] def afterMain(): Unit = ()
+  private[app] def postMain(): Unit = ()
+
+  protected def postShutdown(): Unit = ()
 
   private[app] final def addShutdownHook(): Unit = hook = sys.addShutdownHook(shutdown())
 

@@ -7,7 +7,7 @@ import jline.console.ConsoleReader
   * so the CTRL-D signal listener works properly.
   */
 trait ConsoleShutdown { this: StandaloneApp =>
-  override private[app] def afterMain(): Unit = {
+  override private[app] def postMain(): Unit = {
     do {
       Console.println("Press Ctrl-D to shut down")
     } while (new ConsoleReader().readLine() != null)

@@ -3,6 +3,7 @@ val CrossScalaVersions = Seq("2.11.11", ScalaVersion)
 val ConfigVersion = "1.3.1"
 val ScalaStructLogVersion = "0.1.1-SNAPSHOT"
 val JlineVersion = "2.12"
+val AkkaVersion = "2.5.3"
 
 lazy val root = (project in file("."))
   .enablePlugins(ReleasePlugin, ScalafmtPlugin)
@@ -15,7 +16,8 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "com.typesafe" % "config" % ConfigVersion,
       "com.github.mwegrz" %% "scala-structlog" % ScalaStructLogVersion,
-      "jline" % "jline" % JlineVersion
+      "jline" % "jline" % JlineVersion,
+      "com.typesafe.akka" %% "akka-actor" % AkkaVersion % Optional
     ),
     // Publishing
     publishMavenStyle := true,
@@ -53,5 +55,6 @@ lazy val root = (project in file("."))
         </developers>),
     releaseTagComment := s"Released ${(version in ThisBuild).value}",
     releaseCommitMessage := s"Set version to ${(version in ThisBuild).value}",
+    scalafmtOnCompile := true,
     scalafmtOnCompile := true
   )
