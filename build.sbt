@@ -3,7 +3,7 @@ import ReleaseTransformations._
 val ScalaVersion = "2.12.3"
 val CrossScalaVersions = Seq("2.11.11", ScalaVersion)
 val ConfigVersion = "1.3.1"
-val ScalaStructLogVersion = "0.1.2"
+val ScalaStructLogVersion = "0.1.4"
 val JlineVersion = "2.12"
 val AkkaVersion = "2.5.3"
 
