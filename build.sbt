@@ -14,6 +14,7 @@ lazy val root = (project in file("."))
     organization := "com.github.mwegrz",
     scalaVersion := ScalaVersion,
     crossScalaVersions := CrossScalaVersions,
+    resolvers += "Sonatype Maven Snapshots" at "https://oss.sonatype.org/content/repositories/releases",
     libraryDependencies ++= Seq(
       "com.typesafe" % "config" % ConfigVersion,
       "com.github.mwegrz" %% "scala-structlog" % ScalaStructLogVersion,
