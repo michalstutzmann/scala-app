@@ -38,7 +38,7 @@ abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit
         System.exit(1)
       case Failure(t) =>
         log.error("Initialization failed", t)
-        throw t
+        System.exit(1)
     }
   }
 
