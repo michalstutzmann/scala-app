@@ -8,7 +8,9 @@ abstract class ActorSystemApp(implicit executionContext: ExecutionContext) exten
   override final def init(args: Array[String]): Shutdownable = new Shutdownable {
     private val actorSystem = ActorSystem("main", config)
 
-    override def run(): Unit = actorSystem.actorOf(props(args), "main")
+    override def run(): Unit = try {
+      actorSystem.actorOf(props(args), "main")
+    } finally shutdown()
 
     override def shutdown(): Unit = Await.ready(actorSystem.terminate(), Duration.Inf)
   }
