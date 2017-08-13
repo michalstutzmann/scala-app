@@ -13,7 +13,7 @@ abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit
   private val initTimeout: Duration =
     FiniteDuration(config.getDuration("standalone-app.init-timeout", TimeUnit.MILLISECONDS), MILLISECONDS)
 
-  private val shutdownTimeout: Duration =
+  protected val shutdownTimeout: Duration =
     FiniteDuration(config.getDuration("standalone-app.shutdown-timeout", TimeUnit.MILLISECONDS), MILLISECONDS)
 
   private var shutdownable: Try[Shutdownable] = _
@@ -38,7 +38,7 @@ abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit
         System.exit(1)
       case Failure(t) =>
         log.error("Initialization failed", t)
-        System.exit(1)
+        throw t
     }
   }
 
