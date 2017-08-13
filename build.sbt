@@ -5,7 +5,7 @@ val CrossScalaVersions = Seq("2.11.11", ScalaVersion)
 val ConfigVersion = "1.3.1"
 val ScalaStructLogVersion = "0.1.5"
 val JlineVersion = "2.12"
-val AkkaVersion = "2.5.3"
+val AkkaVersion = "2.5.4"
 
 lazy val root = (project in file("."))
   .enablePlugins(ReleasePlugin, ScalafmtPlugin)
