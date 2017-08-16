@@ -11,11 +11,14 @@ import akka.actor.{
   SupervisorStrategyConfigurator
 }
 import com.github.mwegrz.scalastructlog.Logging
+import com.typesafe.config.{ Config, ConfigFactory }
 
 import scala.concurrent.{ Await, ExecutionContext }
 import scala.concurrent.duration._
 
-abstract class ActorSystemApp(implicit executionContext: ExecutionContext) extends StandaloneApp { app =>
+abstract class ActorSystemApp(override val config: Config = ConfigFactory.load())(
+    implicit executionContext: ExecutionContext)
+    extends StandaloneApp(config) { app =>
   override final def init(args: Array[String]): Shutdownable = new Shutdownable {
 
     private val actorSystem = ActorSystem("main", config)
