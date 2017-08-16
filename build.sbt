@@ -18,7 +18,7 @@ lazy val root = (project in file("."))
     libraryDependencies ++= Seq(
       "com.typesafe" % "config" % ConfigVersion,
       "com.github.mwegrz" %% "scala-structlog" % ScalaStructLogVersion,
-      "jline" % "jline" % JlineVersion,
+      "jline" % "jline" % JlineVersion % Optional,
       "com.typesafe.akka" %% "akka-actor" % AkkaVersion % Optional
     ),
     scalafmtOnCompile := true,
@@ -41,7 +41,6 @@ lazy val root = (project in file("."))
       releaseStepCommandAndRemaining("+sonatypeReleaseAll"),
       pushChanges
     ),
-    useGpg := true,
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
     // Publish settings
     crossPaths := true,
