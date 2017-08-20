@@ -17,7 +17,7 @@ import scala.concurrent.{ Await, ExecutionContext }
 import scala.concurrent.duration._
 
 abstract class ActorSystemApp(override val config: Config = ConfigFactory.load())(
-    implicit executionContext: ExecutionContext)
+    implicit executionContext: ExecutionContext = ExecutionContext.Implicits.global)
     extends StandaloneApp(config) { app =>
   override final def init(args: Array[String]): Shutdownable = new Shutdownable {
 

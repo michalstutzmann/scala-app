@@ -8,7 +8,8 @@ import scala.sys.ShutdownHookThread
 import scala.util.{ Failure, Success, Try }
 import com.github.mwegrz.scalastructlog.Logging
 
-abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit executionContext: ExecutionContext)
+abstract class StandaloneApp(val config: Config = ConfigFactory.load())(implicit executionContext: ExecutionContext =
+                                                                          ExecutionContext.Implicits.global)
     extends Logging {
   private val initTimeout: Duration =
     FiniteDuration(config.getDuration("standalone-app.init-timeout", TimeUnit.MILLISECONDS), MILLISECONDS)
