@@ -1,11 +1,10 @@
 import ReleaseTransformations._
 
-val ScalaVersion = "2.12.3"
-val CrossScalaVersions = Seq("2.11.11", ScalaVersion)
-val ConfigVersion = "1.3.1"
-val ScalaStructLogVersion = "0.1.5"
+val ScalaVersion = "2.12.4"
+val ConfigVersion = "1.3.2"
+val ScalaStructLogVersion = "0.1.6"
 val JlineVersion = "2.12"
-val AkkaVersion = "2.5.4"
+val AkkaVersion = "2.5.8"
 
 lazy val root = (project in file("."))
   .enablePlugins(ReleasePlugin, ScalafmtPlugin)
@@ -13,7 +12,6 @@ lazy val root = (project in file("."))
     name := "scala-app",
     organization := "com.github.mwegrz",
     scalaVersion := ScalaVersion,
-    crossScalaVersions := CrossScalaVersions,
     resolvers += "Sonatype Maven Snapshots" at "https://oss.sonatype.org/content/repositories/releases",
     libraryDependencies ++= Seq(
       "com.typesafe" % "config" % ConfigVersion,
@@ -26,7 +24,6 @@ lazy val root = (project in file("."))
     releaseTagName := { (version in ThisBuild).value },
     releaseTagComment := s"Release version ${(version in ThisBuild).value}",
     releaseCommitMessage := s"Set version to ${(version in ThisBuild).value}",
-    releaseCrossBuild := true,
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       inquireVersions,
@@ -43,7 +40,6 @@ lazy val root = (project in file("."))
     ),
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
     // Publish settings
-    crossPaths := true,
     autoScalaLibrary := true,
     publishTo := Some(
       if (isSnapshot.value)
