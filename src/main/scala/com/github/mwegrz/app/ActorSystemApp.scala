@@ -35,9 +35,9 @@ final class SupervisorStrategy extends SupervisorStrategyConfigurator with Loggi
   override def create(): akka.actor.SupervisorStrategy = {
     def decider: Decider = {
       case _: ActorInitializationException => Escalate
-      case _: ActorKilledException => Escalate
-      case _: DeathPactException => Escalate
-      case _: Exception => Restart
+      case _: ActorKilledException         => Escalate
+      case _: DeathPactException           => Escalate
+      case _: Exception                    => Restart
     }
     val strategy = OneForOneStrategy()(decider)
     log.debug("Initialized")

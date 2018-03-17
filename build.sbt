@@ -1,10 +1,10 @@
 import ReleaseTransformations._
 
 val ScalaVersion = "2.12.4"
-val ConfigVersion = "1.3.2"
+val ConfigVersion = "1.3.3"
 val ScalaStructLogVersion = "0.1.6"
 val JlineVersion = "2.12"
-val AkkaVersion = "2.5.8"
+val AkkaVersion = "2.5.11"
 
 lazy val root = (project in file("."))
   .enablePlugins(ReleasePlugin, ScalafmtPlugin)
