@@ -2,7 +2,7 @@ import ReleaseTransformations._
 
 val ScalaVersion = "2.12.4"
 val ConfigVersion = "1.3.3"
-val ScalaStructLogVersion = "0.1.6"
+val ScalaStructLogVersion = "0.1.7"
 val JlineVersion = "2.12"
 val AkkaVersion = "2.5.11"
 
