@@ -1,8 +1,8 @@
 import ReleaseTransformations._
 
-val ScalaVersion = "2.12.8"
+val ScalaVersion = "2.13.0"
 val ConfigVersion = "1.3.4"
-val ScalaStructLogVersion = "0.1.10"
+val ScalaStructLogVersion = "0.1.14"
 val JlineVersion = "2.12"
 val AkkaVersion = "2.5.23"
 
@@ -12,6 +12,12 @@ lazy val root = (project in file("."))
     name := "scala-app",
     organization := "com.github.mwegrz",
     scalaVersion := ScalaVersion,
+    crossScalaVersions := Seq(scalaVersion.value, "2.12.8"),
+    scalacOptions ++=
+      (CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, n)) if n >= 13 => Seq("-Xsource:2.14")
+        case _ => Seq("-Yno-adapted-args", "-deprecation")
+      }),
     resolvers += "Sonatype Maven Snapshots" at "https://oss.sonatype.org/content/repositories/releases",
     libraryDependencies ++= Seq(
       "com.typesafe" % "config" % ConfigVersion,
@@ -21,6 +27,7 @@ lazy val root = (project in file("."))
     ),
     scalafmtOnCompile := true,
     // Release settings
+    releaseCrossBuild := true,
     releaseTagName := { (version in ThisBuild).value },
     releaseTagComment := s"Release version ${(version in ThisBuild).value}",
     releaseCommitMessage := s"Set version to ${(version in ThisBuild).value}",
@@ -35,7 +42,7 @@ lazy val root = (project in file("."))
       releaseStepCommandAndRemaining("+publishSigned"),
       setNextVersion,
       commitNextVersion,
-      releaseStepCommandAndRemaining("+sonatypeReleaseAll"),
+      releaseStepCommandAndRemaining("sonatypeReleaseAll"),
       pushChanges
     ),
     releasePublishArtifactsAction := PgpKeys.publishSigned.value,
